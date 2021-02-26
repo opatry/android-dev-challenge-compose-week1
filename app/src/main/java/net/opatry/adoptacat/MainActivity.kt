@@ -23,20 +23,33 @@ package net.opatry.adoptacat
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import net.opatry.adoptacat.data.CatRepository
+import net.opatry.adoptacat.data.FakeCatDataSource
+import net.opatry.adoptacat.ui.CatsScreen
+import net.opatry.adoptacat.ui.CatsViewModel
+import net.opatry.adoptacat.ui.CatsViewModelFactory
 import net.opatry.adoptacat.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
+
+    private val catRepository: CatRepository
+        get() = (application as AdoptACatApplication).catRepository
+
+    private val catsViewModel by viewModels<CatsViewModel> {
+        CatsViewModelFactory(catRepository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                AdoptACatApp()
+                AdoptACatApp(catsViewModel)
             }
         }
     }
@@ -44,9 +57,9 @@ class MainActivity : AppCompatActivity() {
 
 // Start building your app here!
 @Composable
-fun AdoptACatApp() {
+fun AdoptACatApp(catsViewModel: CatsViewModel = CatsViewModel(CatRepository((FakeCatDataSource())))) {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        CatsScreen(catsViewModel)
     }
 }
 

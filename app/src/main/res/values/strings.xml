@@ -32,4 +32,6 @@
       the License.
       -->
     <string name="app_name">🐱 Kitty adoption app</string>
+    <string name="cats_list_empty">No cats founds 😿</string>
+    <string name="cats_list_error">An error occurred while listing cats: %s</string>
 </resources>

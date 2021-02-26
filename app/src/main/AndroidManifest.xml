@@ -29,7 +29,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidDevChallenge">
+        android:theme="@style/Theme.AndroidDevChallenge"
+        android:name=".AdoptACatApplication">
         <activity
             android:name="net.opatry.adoptacat.MainActivity"
             android:label="@string/app_name"
