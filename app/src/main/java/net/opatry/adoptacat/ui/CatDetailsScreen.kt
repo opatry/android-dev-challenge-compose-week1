@@ -75,7 +75,7 @@ fun CatDetailsScreen(cat: CatModel?, popBack: () -> Boolean) {
                         .background(cat.pillColor)
                 )
                 Text(DateUtils.formatElapsedTime(cat.birthdate), style = typography.caption)
-                Text(stringResource(R.string.cat_weight_kg, cat.weightInGram), style = typography.caption)
+                Text(stringResource(R.string.cat_weight_kg, cat.weightInGram / 1000f), style = typography.caption)
                 Text(cat.description, style = typography.body1)
             }
         }
