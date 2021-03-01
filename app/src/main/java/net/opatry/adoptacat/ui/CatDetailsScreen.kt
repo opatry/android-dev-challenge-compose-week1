@@ -54,7 +54,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -191,7 +190,7 @@ fun CaptionWithIcon(imageVector: ImageVector, contentDescription: String, label:
         imageVector,
         contentDescription,
         Modifier.padding(horizontal = 8.dp).size(16.dp),
-        Color.Black.copy(alpha = .4f),
+        MaterialTheme.colors.onSurface.copy(alpha = .4f),
     )
     Text(label, style = typography.caption)
 }
