@@ -26,43 +26,24 @@ import android.text.format.DateUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.chrisbanes.accompanist.coil.CoilImage
-import kotlinx.coroutines.launch
 import net.opatry.adoptacat.R
-import net.opatry.adoptacat.data.CatRepository
 import net.opatry.adoptacat.model.CatModel
 import net.opatry.adoptacat.ui.theme.typography
-
-val CatModel.pillColor: Color
-    get() = when (color) {
-        // TODO
-        "" -> Color.Cyan
-        else -> Color.Green
-    }
 
 @Composable
 fun CatDetailsScreen(cat: CatModel?, popBack: () -> Boolean) {

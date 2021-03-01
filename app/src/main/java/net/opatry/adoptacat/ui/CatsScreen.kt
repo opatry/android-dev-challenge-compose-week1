@@ -21,9 +21,7 @@
  */
 package net.opatry.adoptacat.ui
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,31 +35,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material.icons.outlined.Female
-import androidx.compose.material.icons.outlined.Male
 import androidx.compose.material.icons.outlined.Pets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.accompanist.coil.CoilImage
 import net.opatry.adoptacat.R
-import net.opatry.adoptacat.model.CatBreed
 import net.opatry.adoptacat.model.CatModel
-import net.opatry.adoptacat.model.Gender
 import net.opatry.adoptacat.ui.theme.typography
 
 @Composable
@@ -119,23 +109,6 @@ fun LoadedCatsContent(cats: List<CatModel>, onCatSelected: (CatModel) -> Unit) {
             CatCard(cat, onCatSelected)
         }
     }
-}
-
-val CatModel.cardColor: Color
-    get() = when (breed) {
-        // TODO
-        "" -> Color.Cyan
-        else -> Color.Green
-    }
-
-fun Gender.imageVector() = when(this) {
-    Gender.Male -> Icons.Outlined.Male
-    Gender.Female -> Icons.Outlined.Female
-}
-
-fun Gender.color() = when(this) {
-    Gender.Male -> Color(0xFFB8F5FD)
-    Gender.Female -> Color(0xFFE3BAFF)
 }
 
 @Composable
@@ -200,9 +173,9 @@ fun CatCard(cat: CatModel, onCatSelected: (CatModel) -> Unit) {
                             .size(24.dp)
                             // .alignByBaseline()
                         ,
-                        imageVector = cat.gender.imageVector(),
+                        imageVector = cat.gender.imageVector,
                         contentDescription = null,
-                        tint = cat.gender.color(),
+                        tint = cat.gender.color,
                     )
                 }
                 Text(stringResource(cat.breed.stringRes), style = typography.caption)

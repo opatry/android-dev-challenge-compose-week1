@@ -23,9 +23,17 @@
 package net.opatry.adoptacat.ui
 
 import androidx.annotation.StringRes
+import androidx.compose.ui.graphics.Color
 import net.opatry.adoptacat.R
 import net.opatry.adoptacat.model.CatBreed
 import net.opatry.adoptacat.model.CatModel
+
+val CatModel.pillColor: Color
+    get() = when (color) {
+        // TODO
+        "" -> Color.Cyan
+        else -> Color.Green
+    }
 
 @get:StringRes
 val CatBreed.stringRes
