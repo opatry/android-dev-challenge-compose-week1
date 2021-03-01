@@ -26,6 +26,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -86,19 +87,37 @@ fun CatsStateDispatcher(uiState: CatsScreenState, selectedCat: CatModel?, onCatS
 
 @Composable
 fun LoadingCatsContent() {
-    Box {
+    Box(Modifier.fillMaxWidth().fillMaxHeight(.6f),
+        contentAlignment = Alignment.Center) {
         CircularProgressIndicator(Modifier.align(Alignment.Center))
     }
 }
 
 @Composable
 fun ErrorCatsContent(cause: Exception) {
-    Text(stringResource(R.string.cats_list_error, cause.message ?: ""))
+    Box(Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(.6f)
+            .padding(8.dp)
+        ,
+        contentAlignment = Alignment.Center) {
+        Text(
+            stringResource(R.string.cats_list_error, cause.message ?: ""),
+            color = MaterialTheme.colors.error,
+            style = typography.body1,
+        )
+    }
 }
 
 @Composable
 fun EmptyCatsContent() {
-    Text(stringResource(R.string.cats_list_empty))
+    Box(Modifier.fillMaxWidth().fillMaxHeight(.6f),
+        contentAlignment = Alignment.Center) {
+        Text(
+            stringResource(R.string.cats_list_empty),
+            style = typography.body1,
+        )
+    }
 }
 
 @Composable
