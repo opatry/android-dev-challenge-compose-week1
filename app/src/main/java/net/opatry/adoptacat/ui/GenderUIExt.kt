@@ -22,10 +22,12 @@
 
 package net.opatry.adoptacat.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Female
 import androidx.compose.material.icons.outlined.Male
 import androidx.compose.ui.graphics.Color
+import net.opatry.adoptacat.R
 import net.opatry.adoptacat.model.Gender
 
 val Gender.imageVector
@@ -36,6 +38,13 @@ val Gender.imageVector
 
 val Gender.color
     get() = when (this) {
-        Gender.Male -> Color(0xFFB8F5FD)
-        Gender.Female -> Color(0xFFE3BAFF)
+        Gender.Male -> Color(0xFF9AD7DF)
+        Gender.Female -> Color(0xFFD7AFF3)
+    }
+
+@get:StringRes
+val Gender.stringRes: Int
+    get() = when (this) {
+        Gender.Male -> R.string.gender_male
+        Gender.Female -> R.string.gender_female
     }

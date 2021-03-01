@@ -22,10 +22,16 @@
 
 <resources>
     <string name="app_name">Adopt a cat</string>
+
+    <string name="navigation_back">Back</string>
+
     <string name="cats_list_empty">No cats founds 😿</string>
     <string name="cats_list_error">An error occurred while listing cats: %s</string>
-    <string name="navigation_back">Back</string>
-    <string name="cat_weight_kg">%1$.2fKg</string>
+
+    <string name="cat_details_no_cat_selected">No cat selected</string>
+    <string name="cat_details_no_cat_selected_explanation">💡 You can select a cat in the cats list.</string>
+    <string name="cat_details_weight_kg">%1$.2fKg</string>
+    <string name="cat_details_adopt_me">Adopt me</string>
 
     <string name="cat_breed_abyssinian">Abyssinian</string>
     <string name="cat_breed_aegean">Aegean</string>
@@ -123,5 +129,10 @@
     <string name="cat_breed_turkish_angora">Turkish Angora</string>
     <string name="cat_breed_turkish_van">Turkish Van</string>
     <string name="cat_breed_ukrainian_levkoy">Ukrainian Levkoy</string>
-    
+
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+    <string name="cat_details_weight_desc">Weight</string>
+    <string name="cat_details_birthdate_desc">Birthdate</string>
+
 </resources>

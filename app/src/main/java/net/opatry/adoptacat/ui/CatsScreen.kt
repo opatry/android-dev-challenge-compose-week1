@@ -21,19 +21,19 @@
  */
 package net.opatry.adoptacat.ui
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -46,40 +46,41 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.chrisbanes.accompanist.coil.CoilImage
 import net.opatry.adoptacat.R
 import net.opatry.adoptacat.model.CatModel
 import net.opatry.adoptacat.ui.theme.typography
 
 @Composable
-fun CatsScreen(viewModel: CatsViewModel, onCatSelected: (CatModel) -> Unit) {
+fun CatsScreen(viewModel: CatsViewModel, selectedCat: CatModel?, onCatSelected: (CatModel) -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
                 navigationIcon = { Icon(Icons.Outlined.Pets, contentDescription = null,
                     Modifier
                         .size(48.dp)
+                        .rotate(45f)
                         .padding(12.dp)) },
                 title = { Text(stringResource(R.string.app_name)) },
             )
         },
         content = {
             val state by viewModel.catsState.observeAsState(CatsScreenState.Loading)
-            CatsStateDispatcher(uiState = state, onCatSelected)
+            CatsStateDispatcher(uiState = state, selectedCat, onCatSelected)
         }
     )
 }
 
 @Composable
-fun CatsStateDispatcher(uiState: CatsScreenState, onCatSelected: (CatModel) -> Unit) {
+fun CatsStateDispatcher(uiState: CatsScreenState, selectedCat: CatModel?, onCatSelected: (CatModel) -> Unit) {
     when (uiState) {
         CatsScreenState.Loading -> LoadingCatsContent()
         is CatsScreenState.Error -> ErrorCatsContent(uiState.cause)
         CatsScreenState.Empty -> EmptyCatsContent()
-        is CatsScreenState.Loaded -> LoadedCatsContent(uiState.cats, onCatSelected)
+        is CatsScreenState.Loaded -> LoadedCatsContent(uiState.cats, selectedCat, onCatSelected)
     }
 }
 
@@ -92,7 +93,7 @@ fun LoadingCatsContent() {
 
 @Composable
 fun ErrorCatsContent(cause: Exception) {
-    Text(stringResource(R.string.cats_list_error, cause.message ?: "?"))
+    Text(stringResource(R.string.cats_list_error, cause.message ?: ""))
 }
 
 @Composable
@@ -101,85 +102,46 @@ fun EmptyCatsContent() {
 }
 
 @Composable
-fun LoadedCatsContent(cats: List<CatModel>, onCatSelected: (CatModel) -> Unit) {
-    LazyColumn(modifier = Modifier
-        // .background(Color.Blue)
-    ) {
+fun LoadedCatsContent(cats: List<CatModel>, selectedCat: CatModel?, onCatSelected: (CatModel) -> Unit) {
+    LazyColumn {
         items(cats) { cat ->
-            CatCard(cat, onCatSelected)
+            CatView(cat, selectedCat == cat, onCatSelected)
         }
     }
 }
 
 @Composable
-fun CatCard(cat: CatModel, onCatSelected: (CatModel) -> Unit) {
-    val pictureSize = 48.dp
-    Card(modifier = Modifier
-        .padding(16.dp)
-        .clickable(onClick = { onCatSelected(cat) })
-        // .fillMaxWidth()
+fun CatView(cat: CatModel, isSelected: Boolean, onCatSelected: (CatModel) -> Unit) {
+    Row(modifier = Modifier
+        .clickable { onCatSelected(cat) }
+        .background(if (isSelected) MaterialTheme.colors.secondary.copy(alpha = .2f) else Color.Transparent)
+        .padding(8.dp)
     ) {
-        Row(
-            modifier = Modifier
-                // .background(cat.cardColor)
-                // .padding(16.dp)
-                // .fillMaxWidth()
-        ) {
-            CoilImage(
-                data = cat.pictureUrl,
-                contentDescription = null,
-                modifier = Modifier
-                    // .padding(8.dp)
-                    // .size(pictureSize)
-                    .fillMaxHeight()
-                ,
-                // requestBuilder = {
-                //     transformations(CircleCropTransformation())
-                // },
-                fadeIn = true,
-                loading = {
-                    Box(Modifier.matchParentSize()) {
-                        CircularProgressIndicator(Modifier.align(Alignment.Center))
-                    }
-                },
-                error = {
-                    Image(
-                        painter = painterResource(R.drawable.ic_android),
-                        contentDescription = null,
-                        modifier = Modifier
-                            // .size(pictureSize)
-                            .fillMaxHeight()
-                        ,
-                    )
-                }
-            )
-            Column(modifier = Modifier
+        CatPictureView(cat.pictureUrl, compact = true)
+        Column(
+            Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-            ) {
-                Row {
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp)
-                            // .alignByBaseline()
-                        ,
-                        imageVector = Icons.Outlined.Pets,
-                        contentDescription = null,
-                        tint = MaterialTheme.colors.onBackground,
-                    )
-                    Text(cat.name, style = typography.h5, modifier = Modifier/*.alignByBaseline()*/)
-                    Icon(
-                        modifier = Modifier
-                            .size(24.dp)
-                            // .alignByBaseline()
-                        ,
-                        imageVector = cat.gender.imageVector,
-                        contentDescription = null,
-                        tint = cat.gender.color,
-                    )
-                }
-                Text(stringResource(cat.breed.stringRes), style = typography.caption)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(cat.name, style = typography.h5)
+                Icon(
+                    cat.gender.imageVector,
+                    stringResource(cat.gender.stringRes),
+                    Modifier
+                        .padding(start = 8.dp)
+                        .size(24.dp)
+                    ,
+                    cat.gender.color,
+                )
             }
+            BreedView(cat.breed)
         }
     }
+
+    Divider(
+        Modifier
+            .fillMaxWidth()
+            .height(1.dp)
+    )
 }

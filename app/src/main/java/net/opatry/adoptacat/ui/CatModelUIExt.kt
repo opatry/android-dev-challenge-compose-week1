@@ -30,9 +30,21 @@ import net.opatry.adoptacat.model.CatModel
 
 val CatModel.pillColor: Color
     get() = when (color) {
-        // TODO
-        "" -> Color.Cyan
-        else -> Color.Green
+        "IndianRed" -> Color(0xFFCD5C5C)
+        "LightCoral" -> Color(0xFFF08080)
+        "DarkRed" -> Color(0xFF8B0000)
+        "PapayaWhip" -> Color(0xFFFFEFD5)
+        "RosyBrown" -> Color(0xFFBC8F8F)
+        "Sienna" -> Color(0xFFA0522D)
+        "Brown" -> Color(0xFFA52A2A)
+        "Maroon" -> Color(0xFF800000)
+        "AntiqueWhite" -> Color(0xFFFAEBD7)
+        "Linen" -> Color(0xFFFAF0E6)
+        "DarkGray" -> Color(0xFFA9A9A9)
+        "DimGray" -> Color(0xFF696969)
+        "SlateGray" -> Color(0xFF708090)
+        "Black" -> Color(0xFF000000)
+        else -> Color.Magenta
     }
 
 @get:StringRes
