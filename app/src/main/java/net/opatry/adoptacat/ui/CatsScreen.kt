@@ -21,6 +21,7 @@
  */
 package net.opatry.adoptacat.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -58,6 +59,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.chrisbanes.accompanist.coil.CoilImage
 import net.opatry.adoptacat.R
+import net.opatry.adoptacat.model.CatBreed
 import net.opatry.adoptacat.model.CatModel
 import net.opatry.adoptacat.model.Gender
 import net.opatry.adoptacat.ui.theme.typography
@@ -203,7 +205,7 @@ fun CatCard(cat: CatModel, onCatSelected: (CatModel) -> Unit) {
                         tint = cat.gender.color(),
                     )
                 }
-                Text(cat.breed, style = typography.h6)
+                Text(stringResource(cat.breed.stringRes), style = typography.caption)
             }
         }
     }

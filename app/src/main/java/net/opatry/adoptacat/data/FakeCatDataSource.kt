@@ -22,6 +22,7 @@
 package net.opatry.adoptacat.data
 
 import kotlinx.coroutines.delay
+import net.opatry.adoptacat.model.CatBreed
 import net.opatry.adoptacat.model.CatModel
 import net.opatry.adoptacat.model.Gender
 import java.util.UUID
@@ -33,12 +34,13 @@ class FakeCatDataSource : CatDataSource {
         return if (false && Random.nextBoolean())
             emptyList()
         else mutableListOf<CatModel>().apply {
+            val breeds = CatBreed.values()
             var index = 0
             repeat(40) {
                 this += CatModel(
                     uuid = UUID.randomUUID(),
                     name = "Cat ${index++}",
-                    breed = "Goutière",
+                    breed = breeds[Random.nextInt(breeds.size)],
                     birthdate = 0L,
                     gender = if (Random.nextBoolean()) Gender.Male else Gender.Female,
                     weightInGram = 0f,

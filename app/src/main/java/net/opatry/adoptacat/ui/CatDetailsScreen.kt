@@ -86,7 +86,7 @@ fun CatDetailsScreen(cat: CatModel?, popBack: () -> Boolean) {
                     data = cat.pictureUrl,
                     contentDescription = null,
                 )
-                Text(cat.breed, style = typography.caption)
+                Text(stringResource(cat.breed.stringRes), style = typography.caption)
                 Box(
                     modifier = Modifier
                         .size(24.dp)
