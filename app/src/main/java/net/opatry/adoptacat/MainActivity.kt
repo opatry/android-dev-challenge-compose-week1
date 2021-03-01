@@ -23,58 +23,79 @@ package net.opatry.adoptacat
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import net.opatry.adoptacat.data.CatRepository
 import net.opatry.adoptacat.data.FakeCatDataSource
+import net.opatry.adoptacat.ui.CatDetailsScreen
 import net.opatry.adoptacat.ui.CatsScreen
 import net.opatry.adoptacat.ui.CatsViewModel
 import net.opatry.adoptacat.ui.CatsViewModelFactory
-import net.opatry.adoptacat.ui.theme.MyTheme
+import net.opatry.adoptacat.ui.theme.AdoptACatTheme
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
     private val catRepository: CatRepository
         get() = (application as AdoptACatApplication).catRepository
 
-    private val catsViewModel by viewModels<CatsViewModel> {
-        CatsViewModelFactory(catRepository)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTheme {
-                AdoptACatApp(catsViewModel)
+            AdoptACatTheme {
+                MainLayout(catRepository)
             }
         }
     }
 }
 
-// Start building your app here!
+sealed class NavRoute(val path: String) {
+    object CatsList : NavRoute("cats")
+    object CatDetails : NavRoute("cat.details")
+}
+
 @Composable
-fun AdoptACatApp(catsViewModel: CatsViewModel = CatsViewModel(CatRepository((FakeCatDataSource())))) {
+fun MainLayout(catRepository: CatRepository = (CatRepository((FakeCatDataSource())))) {
+    val navController = rememberNavController()
+    val catsViewModel = viewModel<CatsViewModel>(factory = CatsViewModelFactory(catRepository))
     Surface(color = MaterialTheme.colors.background) {
-        CatsScreen(catsViewModel)
+        NavHost(navController, startDestination = NavRoute.CatsList.path) {
+            composable(NavRoute.CatsList.path) {
+                CatsScreen(catsViewModel,
+                    onCatSelected = { cat ->
+                        navController.navigate("${NavRoute.CatDetails.path}/${cat.uuid}")
+                    }
+                )
+            }
+            composable("${NavRoute.CatDetails.path}/{uuid}") { backStackEntry ->
+                val uuid = UUID.fromString(backStackEntry.arguments?.get("uuid") as String)
+                val cat = catsViewModel.findCatByUUID(uuid)
+                CatDetailsScreen(cat) { navController.popBackStack() }
+            }
+        }
     }
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
-    MyTheme {
-        AdoptACatApp()
+    AdoptACatTheme {
+        MainLayout()
     }
 }
 
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
-    MyTheme(darkTheme = true) {
-        AdoptACatApp()
+    AdoptACatTheme(darkTheme = true) {
+        MainLayout()
     }
 }

@@ -26,6 +26,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import net.opatry.adoptacat.data.CatRepository
 import net.opatry.adoptacat.model.CatModel
+import java.util.UUID
 
 sealed class CatsScreenState {
     object Loading : CatsScreenState()
@@ -48,6 +49,11 @@ class CatsViewModel(private val repository: CatRepository) : ViewModel() {
             CatsScreenState.Error(e)
         }
         emit(state)
+    }
+
+    fun findCatByUUID(uuid: UUID): CatModel? {
+        val cats = (catsState.value as? CatsScreenState.Loaded)?.cats ?: return null
+        return cats.find { it.uuid == uuid }
     }
 }
 

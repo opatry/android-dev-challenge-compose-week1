@@ -23,20 +23,30 @@ package net.opatry.adoptacat.data
 
 import kotlinx.coroutines.delay
 import net.opatry.adoptacat.model.CatModel
+import net.opatry.adoptacat.model.Gender
+import java.util.UUID
 import kotlin.random.Random
 
 class FakeCatDataSource : CatDataSource {
     override suspend fun loadCats(): List<CatModel> {
         delay(500)
-        return if (Random.nextBoolean())
+        return if (false && Random.nextBoolean())
             emptyList()
-        else listOf(
-            CatModel(
-                name = "Zorro",
-                breed = "Goutière",
-                pictureUrl = "https://cdn2.thecatapi.com/images/a50.jpg",
-                adopted = false
-            )
-        )
+        else mutableListOf<CatModel>().apply {
+            var index = 0
+            repeat(40) {
+                this += CatModel(
+                    uuid = UUID.randomUUID(),
+                    name = "Cat ${index++}",
+                    breed = "Goutière",
+                    birthdate = 0L,
+                    gender = if (Random.nextBoolean()) Gender.Male else Gender.Female,
+                    weightInGram = 0f,
+                    color = "",
+                    pictureUrl = if (Random.nextBoolean()) "https://cdn2.thecatapi.com/images/322.jpg" else "https://cdn2.thecatapi.com/images/a50.jpg",
+                    adopted = false
+                )
+            }
+        }
     }
 }

@@ -21,9 +21,22 @@
  */
 package net.opatry.adoptacat.model
 
+import java.util.UUID
+
+enum class Gender {
+    Male,
+    Female,
+}
+
 data class CatModel(
+    val uuid: UUID,
     val name: String,
     val breed: String,
+    val birthdate: Long,
     val pictureUrl: String,
+    val gender: Gender,
+    val weightInGram: Float,
+    val color: String,
+    val description: String = "",
     val adopted: Boolean = false,
 )
