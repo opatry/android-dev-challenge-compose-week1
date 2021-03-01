@@ -15,10 +15,6 @@
 
 <img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">
 
-## Credits
-
-Launcher icon by [svgrepo.com](https://www.svgrepo.com/).
-
 ## License
 ```
 Copyright 2020 The Android Open Source Project
