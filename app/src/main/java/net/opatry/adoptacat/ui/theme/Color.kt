@@ -23,7 +23,9 @@ package net.opatry.adoptacat.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val purple200 = Color(0xFFBB86FC)
-val purple500 = Color(0xFF6200EE)
-val purple700 = Color(0xFF3700B3)
-val teal200 = Color(0xFF03DAC5)
+// colors from https://coolors.co/993955-ae76a6-a3c3d9-ccd6eb-e9ecf5
+val quinacridoneMagenta = Color(0xff993955)
+val pearlyPurple = Color(0xffae76a6)
+val paleCerulean = Color(0xffa3c3d9)
+val lightPeriwinkle = Color(0xffccd6eb)
+val ghostWhite = Color(0xffe9ecf5)
