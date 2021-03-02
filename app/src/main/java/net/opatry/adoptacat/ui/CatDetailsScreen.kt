@@ -19,7 +19,6 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 package net.opatry.adoptacat.ui
 
 import android.text.format.DateUtils
@@ -102,8 +101,7 @@ fun CatDetailsNone() {
         Modifier
             .fillMaxWidth()
             .fillMaxHeight(0.5f)
-            .padding(16.dp)
-        ,
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -121,12 +119,12 @@ fun CatDetailsNone() {
 
 @Composable
 fun CatDetailsContent(cat: CatModel) {
-    Column(Modifier
+    Column(
+        Modifier
             .fillMaxWidth()
             .fillMaxHeight()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
-        ,
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -137,8 +135,7 @@ fun CatDetailsContent(cat: CatModel) {
                 stringResource(cat.gender.stringRes),
                 Modifier
                     .padding(start = 12.dp)
-                    .size(36.dp)
-                ,
+                    .size(36.dp),
                 cat.gender.color,
             )
         }
@@ -147,7 +144,8 @@ fun CatDetailsContent(cat: CatModel) {
             BreedView(cat.breed, Modifier.padding(vertical = 8.dp))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(Modifier
+                Box(
+                    Modifier
                         .size(16.dp)
                         .clip(CircleShape)
                         .background(cat.pillColor)
@@ -206,8 +204,7 @@ fun CatPictureView(pictureUrl: String, compact: Boolean) {
         Modifier
             .padding(picturePadding)
             .size(pictureSize)
-            .fillMaxHeight()
-        ,
+            .fillMaxHeight(),
         requestBuilder = {
             transformations(
                 if (compact) {
@@ -235,8 +232,7 @@ fun CatPictureView(pictureUrl: String, compact: Boolean) {
                 Modifier
                     .padding(picturePadding)
                     .size(pictureSize)
-                    .fillMaxHeight()
-                ,
+                    .fillMaxHeight(),
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.error),
             )
         }
@@ -252,8 +248,7 @@ fun BreedView(breed: CatBreed, modifier: Modifier = Modifier) {
             Modifier
                 .padding(end = 8.dp)
                 .size(16.dp)
-                .rotate(45f)
-            ,
+                .rotate(45f),
             MaterialTheme.colors.secondary,
         )
         Text(stringResource(breed.stringRes), style = typography.caption)

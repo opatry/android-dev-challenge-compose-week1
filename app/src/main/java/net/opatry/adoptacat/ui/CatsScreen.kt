@@ -60,11 +60,15 @@ fun CatsScreen(viewModel: CatsViewModel, selectedCat: CatModel?, onCatSelected: 
     Scaffold(
         topBar = {
             TopAppBar(
-                navigationIcon = { Icon(Icons.Outlined.Pets, contentDescription = null,
-                    Modifier
-                        .size(48.dp)
-                        .rotate(45f)
-                        .padding(12.dp)) },
+                navigationIcon = {
+                    Icon(
+                        Icons.Outlined.Pets, contentDescription = null,
+                        Modifier
+                            .size(48.dp)
+                            .rotate(45f)
+                            .padding(12.dp)
+                    )
+                },
                 title = { Text(stringResource(R.string.app_name)) },
             )
         },
@@ -87,20 +91,23 @@ fun CatsStateDispatcher(uiState: CatsScreenState, selectedCat: CatModel?, onCatS
 
 @Composable
 fun LoadingCatsContent() {
-    Box(Modifier.fillMaxWidth().fillMaxHeight(.6f),
-        contentAlignment = Alignment.Center) {
+    Box(
+        Modifier.fillMaxWidth().fillMaxHeight(.6f),
+        contentAlignment = Alignment.Center
+    ) {
         CircularProgressIndicator(Modifier.align(Alignment.Center))
     }
 }
 
 @Composable
 fun ErrorCatsContent(cause: Exception) {
-    Box(Modifier
+    Box(
+        Modifier
             .fillMaxWidth()
             .fillMaxHeight(.6f)
-            .padding(8.dp)
-        ,
-        contentAlignment = Alignment.Center) {
+            .padding(8.dp),
+        contentAlignment = Alignment.Center
+    ) {
         Text(
             stringResource(R.string.cats_list_error, cause.message ?: ""),
             color = MaterialTheme.colors.error,
@@ -111,8 +118,10 @@ fun ErrorCatsContent(cause: Exception) {
 
 @Composable
 fun EmptyCatsContent() {
-    Box(Modifier.fillMaxWidth().fillMaxHeight(.6f),
-        contentAlignment = Alignment.Center) {
+    Box(
+        Modifier.fillMaxWidth().fillMaxHeight(.6f),
+        contentAlignment = Alignment.Center
+    ) {
         Text(
             stringResource(R.string.cats_list_empty),
             style = typography.body1,
@@ -131,10 +140,11 @@ fun LoadedCatsContent(cats: List<CatModel>, selectedCat: CatModel?, onCatSelecte
 
 @Composable
 fun CatView(cat: CatModel, isSelected: Boolean, onCatSelected: (CatModel) -> Unit) {
-    Row(modifier = Modifier
-        .clickable { onCatSelected(cat) }
-        .background(if (isSelected) MaterialTheme.colors.secondary.copy(alpha = .2f) else Color.Transparent)
-        .padding(8.dp)
+    Row(
+        modifier = Modifier
+            .clickable { onCatSelected(cat) }
+            .background(if (isSelected) MaterialTheme.colors.secondary.copy(alpha = .2f) else Color.Transparent)
+            .padding(8.dp)
     ) {
         CatPictureView(cat.pictureUrl, compact = true)
         Column(
@@ -149,8 +159,7 @@ fun CatView(cat: CatModel, isSelected: Boolean, onCatSelected: (CatModel) -> Uni
                     stringResource(cat.gender.stringRes),
                     Modifier
                         .padding(start = 8.dp)
-                        .size(24.dp)
-                    ,
+                        .size(24.dp),
                     cat.gender.color,
                 )
             }
