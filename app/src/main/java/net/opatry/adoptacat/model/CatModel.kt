@@ -135,7 +135,7 @@ data class CatModel(
     val birthdate: Long,
     val pictureUrl: String,
     val gender: Gender,
-    val weightInGram: Float,
+    val weightInGram: Int,
     val color: String,
     val description: String = "",
     val adopted: Boolean = false,

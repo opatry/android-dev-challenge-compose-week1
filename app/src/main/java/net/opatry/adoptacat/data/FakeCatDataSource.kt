@@ -42,7 +42,7 @@ fun fakeCat(name: String, breed: CatBreed, pictureUrl: String, gender: Gender, a
         breed = breed,
         birthdate = System.currentTimeMillis() - age.inMilliseconds.toLong(),
         gender = gender,
-        weightInGram = 0f,
+        weightInGram = Random.nextInt(1000, 6500),
         color = fakeColors[Random.nextInt(fakeColors.size)],
         pictureUrl = pictureUrl,
         adopted = false,
