@@ -220,22 +220,23 @@ fun CatPictureView(pictureUrl: String, compact: Boolean) {
             )
         },
         fadeIn = true,
-        loading = {
-            Box(Modifier.matchParentSize()) {
-                CircularProgressIndicator(Modifier.align(Alignment.Center))
-            }
-        },
-        error = {
-            Image(
-                painterResource(R.drawable.ic_android),
-                null,
-                Modifier
-                    .padding(picturePadding)
-                    .size(pictureSize)
-                    .fillMaxHeight(),
-                colorFilter = ColorFilter.tint(MaterialTheme.colors.error),
-            )
-        }
+        // FIXME needs fine tuning
+        // loading = {
+        //     Box(Modifier.matchParentSize()) {
+        //         CircularProgressIndicator(Modifier.align(Alignment.Center))
+        //     }
+        // },
+        // error = {
+        //     Image(
+        //         painterResource(R.drawable.ic_android),
+        //         null,
+        //         Modifier
+        //             .padding(picturePadding)
+        //             .size(pictureSize)
+        //             .fillMaxHeight(),
+        //         colorFilter = ColorFilter.tint(MaterialTheme.colors.error),
+        //     )
+        // }
     )
 }
 
